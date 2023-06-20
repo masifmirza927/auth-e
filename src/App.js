@@ -5,8 +5,22 @@ import Home from "./pages/Home"
 import Create from "./pages/Create"
 import StudentDetail from "./pages/StudentDetail"
 import Search from './pages/Search';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [students, setStudents] = useState([]);
+
+
+useEffect( () => {
+
+  axios.get("http://localhost:3003/students").then( (res) => {
+    console.log(res);
+  })
+
+
+ }, [] );
+
   return (
     <div className='container'>
       <Navbar />
