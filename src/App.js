@@ -11,7 +11,6 @@ import axios from 'axios';
 function App() {
   const [students, setStudents] = useState([]);
 
-
 useEffect( () => {
 
   axios.get("http://localhost:3003/students").then( (res) => {
