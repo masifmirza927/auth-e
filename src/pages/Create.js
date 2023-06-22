@@ -11,17 +11,15 @@ function Create() {
   const handleSubmit = () => {
     // validate values
     if (name && email && address && image) {
-      // create formData
-      const form = new FormData();
-      form.append("name", name);
-      form.append("email", email);
-      form.append("address", address);
-      form.append("about", about);
-      form.append("image", image);
-
 
       // send data to server as form data
-      axios.post('http://localhost:3003/create-student/', form, {
+      axios.post('http://localhost:3003/create-student/', {
+        name: name,
+        email: email,
+        address: address,
+        about: about,
+        image: image
+      }, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
