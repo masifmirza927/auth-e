@@ -1,12 +1,26 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import axios from "axios";
 
 
 function StudentDetail() {
     const [student, setStudent] = useState(null);
     const params = useParams();
+    const navigate = useNavigate();
     const id = params.id;
+
+
+const handleDelete = () => {
+    if(window.confirm("are you sure?") == true) {
+        axios.delete("http://localhost:3003/student-delete/"+id).then( (res) => {
+            if(res.data.status == true) {
+                alert("successfully deleted");
+                navigate("/");
+            }
+        })
+      }
+}    
+
 
     useEffect(() => {
         axios.get("http://localhost:3003/student/" + id).then((res) => {
@@ -33,7 +47,7 @@ function StudentDetail() {
                             </div>
                             <div>
                                 <Link to="/" className="btn btn-info mx-2">Edit</Link>
-                                <button className="btn btn-danger">Delete</button>
+                                <button onClick={handleDelete} className="btn btn-danger">Delete</button>
                             </div>
                         </div>
                     </div>
