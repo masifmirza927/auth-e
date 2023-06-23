@@ -16,6 +16,7 @@ useEffect( () => {
   axios.get("http://localhost:3003/students").then( (res) => {
     console.log(res.data);
     if(res.data.status == true) {
+      console.log(res.data.students)
       setStudents(res.data.students);
     }
   })
