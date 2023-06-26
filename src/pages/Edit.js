@@ -19,7 +19,7 @@ function Edit() {
     if (name && email && address && image) {
 
       // send data to server as form data
-      axios.post('http://localhost:3003/create-student/', {
+      axios.put('http://localhost:3003/update-student/' + id, {
         name: name,
         email: email,
         address: address,
@@ -32,17 +32,15 @@ function Edit() {
       }
       ).then( (res) => {
         if(res.data.status == true) {
-          navigate("/", {
-            state: {
-              created: true
-            }
-          })
-
-
+          alert("successfully updated")
+          navigate(-1)
         }
       })
 
+    }else {
+      alert("One or more filed is empty, all fields are required")
     }
+    
 
 
   }
@@ -51,7 +49,9 @@ function Edit() {
     axios.get("http://localhost:3003/student/" + id).then((res) => {
         if (res.data.status == true) {
             setName(res.data.student.name);
-            setEmail(res.data.student.email)
+            setEmail(res.data.student.email);
+            setAddress(res.data.student.address)
+            setAbout(res.data.student.about)
         }
     })
 }, []);
@@ -74,12 +74,12 @@ function Edit() {
           </div>
           <div className="mb-3">
             <label htmlFor="address" className="form-label">Address</label>
-            <input onChange={(event) => { setAddress(event.target.value) }} type="text" className="form-control" id="address" />
+            <input value={address} onChange={(event) => { setAddress(event.target.value) }} type="text" className="form-control" id="address" />
           </div>
 
           <div className="mb-3">
             <label htmlFor="exampleFormControlTextarea1" className="form-label">About</label>
-            <textarea onChange={(event) => { setAbout(event.target.value) }} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea value={about} onChange={(event) => { setAbout(event.target.value) }} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
           <button onClick={handleSubmit} className='btn btn-primary'>Update</button>
         </div>
