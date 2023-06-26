@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function Create() {
+function Edit() {
+  const params = useParams();
+  const id = params.id;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -44,6 +47,15 @@ function Create() {
 
   }
 
+  useEffect(() => {
+    axios.get("http://localhost:3003/student/" + id).then((res) => {
+        if (res.data.status == true) {
+            setName(res.data.student.name);
+            setEmail(res.data.student.email)
+        }
+    })
+}, []);
+
   return (
     <>
       <form onSubmit={(event) => { event.preventDefault() }}>
@@ -54,11 +66,11 @@ function Create() {
           </div>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Name</label>
-            <input onChange={(event) => { setName(event.target.value) }} type="text" className="form-control" id="name" />
+            <input value={name} onChange={(event) => { setName(event.target.value) }} type="text" className="form-control" id="name" />
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email</label>
-            <input onChange={(event) => { setEmail(event.target.value) }} type="email" className="form-control" id="email" />
+            <input value={email} onChange={(event) => { setEmail(event.target.value) }} type="email" className="form-control" id="email" />
           </div>
           <div className="mb-3">
             <label htmlFor="address" className="form-label">Address</label>
@@ -69,7 +81,7 @@ function Create() {
             <label htmlFor="exampleFormControlTextarea1" className="form-label">About</label>
             <textarea onChange={(event) => { setAbout(event.target.value) }} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
-          <button onClick={handleSubmit} className='btn btn-primary'>Create</button>
+          <button onClick={handleSubmit} className='btn btn-primary'>Update</button>
         </div>
       </form>
 
@@ -77,4 +89,4 @@ function Create() {
   )
 }
 
-export default Create
+export default Edit

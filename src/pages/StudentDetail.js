@@ -46,7 +46,7 @@ const handleDelete = () => {
                                 <p className="card-text">{student.about}</p>
                             </div>
                             <div>
-                                <Link to="/" className="btn btn-info mx-2">Edit</Link>
+                                <Link to={`/edit/${student._id}`} className="btn btn-primary mx-2">Edit</Link>
                                 <button onClick={handleDelete} className="btn btn-danger">Delete</button>
                             </div>
                         </div>
